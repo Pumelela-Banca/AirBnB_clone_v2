@@ -48,6 +48,12 @@ class DBStorage:
                 for obj in self.__session.query(cl).all():
                     key = cl.__name__ + '.' + obj.id
                     obj_dict[key] = obj
+        else:
+            if type(cls) == str:
+                cls = eval(cls)
+            for obj in self.__session.query(cls).all():
+                key = cls.__name__ + '.' + obj.id
+                obj_dict[key] = obj
         return obj_dict
 
     def new(self, obj):
