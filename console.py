@@ -132,10 +132,9 @@ class HBNBCommand(cmd.Cmd):
             if type(attr_val) is str:
                 attr_val = attr_val.replace('_', ' ')
             dict1[line[0]] = attr_val
-        new_instance = HBNBCommand.classes[attr[0]](**dict1)
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        new_obj = HBNBCommand.classes[attr[0]](**dict1)
+        new_obj.save()
+        print(new_obj.id)
 
     def help_create(self):
         """ Help information for the create method """
@@ -211,19 +210,18 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
-
+        dict1 = storage.all()
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in dict1.items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in dict1.items():
                 print_list.append(str(v))
-
         print(print_list)
 
     def help_all(self):

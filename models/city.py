@@ -5,15 +5,15 @@ from sqlalchemy import Column, String, Integer, ForeignKey
 import os
 
 
-env_value = os.environ.get('HBNB_TYPE_STORAGE')
+env_val = os.environ.get('HBNB_TYPE_STORAGE')
 
 
 class City(BaseModel, Base):
     """ The city class, contains state ID and name """
-    if env_value == 'db':
+    if env_val == 'db':
         __tablename__ = "cities"
         name = Column(String(128), nullable=False)
-        state_id = Column(String(60), nullable=False, ForeignKey("states.id"))
+        state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
     else:
         name = ""
         state_id = ""

@@ -3,20 +3,22 @@
 import uuid
 from datetime import datetime
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, DateTime
+
 
 Base = declarative_base()
+
 
 class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(
-            datatime,
-            nullable=false,
+            DateTime,
+            nullable=False,
             default=datetime.utcnow())
     updated_at = Column(
-            datatime,
-            nullable=false,
+            DateTime,
+            nullable=False,
             default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
@@ -39,7 +41,9 @@ class BaseModel:
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
-        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
+        obj_dict = self.__dict__.copy()
+        obj_dict.pop("_sa_instance_state", None)
+        return '[{}] ({}) {}'.format(cls, self.id, obj_dict)
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
@@ -56,8 +60,7 @@ class BaseModel:
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if dictionary.get['_sa_instance_state'] is not None:
-            del dictionary['_sa_instance_state']
+        dictionary.pop("_sa_instance_state", None)
         return dictionary
 
     def delete(self):

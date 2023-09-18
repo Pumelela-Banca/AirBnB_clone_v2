@@ -7,15 +7,18 @@ from models.city import City
 import os
 
 
-env_value = os.environ.get('HBNB_TYPE_STORAGE')
+env_val = os.environ.get('HBNB_TYPE_STORAGE')
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """ State class """
-    if env_value == 'db':
+    if env_val == 'db':
         __tablename__ = "states"
         name = Column(String(128), nullable=False)
-        cities = relationship("City", cascade="all, delete-orphan", backref="state")
+        cities = relationship(
+                "City",
+                cascade="all, delete-orphan",
+                backref="state")
     else:
         name = ""
 
@@ -24,11 +27,10 @@ class State(BaseModel):
             """Returns the list of City instances with
                state_id equals to the current State.id
             """
-            from models import storage
+            from models.__init__ import storage
             dict_cities = storage.all(City)
             cities_list = []
             for city in dict_cities.values():
                 if city.state_id == self.id:
                     city_list.append(city)
             return cities_list
-
