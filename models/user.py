@@ -5,9 +5,11 @@ from sqlalchemy import Column, Integer, String
 import os
 
 
+env_val = os.environ.get('HBNB_TYPE_STORAGE')
+
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
-    if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
+    if env_val == 'db':
         __tablename__ = "users"
         email = Column(
                 String(128),
