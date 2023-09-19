@@ -3,7 +3,7 @@
 from models.base_model import BaseModel, Base
 from models.user import User
 from models.city import City
-from models.city import Review
+from models.review import Review
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy import Float
 from sqlalchemy.orm import relationship
@@ -60,14 +60,14 @@ class Place(BaseModel, Base):
         amenity_ids = []
 
         @property
-        def reviews(self)
-        """Returns the list of City instances with
+        def reviews(self):
+            """Returns the list of City instances with
                place_id equals to the current Place.id
-        """
-        from models.__init__ import storage
-        dict_reviews = storage.all(Review)
-        reviews_list = []
-        for rev in dict_reviews.values():
-            if rev.place_id == self.id:
-                reviews_list.append(rev)
-        return reviews_list
+            """
+            from models.__init__ import storage
+            dict_reviews = storage.all(Review)
+            reviews_list = []
+            for rev in dict_reviews.values():
+                if rev.place_id == self.id:
+                    reviews_list.append(rev)
+            return reviews_list
