@@ -28,8 +28,6 @@ class Review(BaseModel, Base):
             String(60),
             ForeignKey("users.id"),
             nullable=False)
-        user = relationship("User")
-        place = relationship("Place")
     else:
         text = ""
         user_id = ""
