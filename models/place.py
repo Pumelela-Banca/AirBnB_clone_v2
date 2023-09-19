@@ -5,6 +5,7 @@ from models.user import User
 from models.city import City
 from sqlalchemy import Column, String, Integer, ForeignKey 
 from sqlalchemy import Float
+from sqlalchemy.orm import relationship
 import os
 
 
@@ -43,7 +44,12 @@ class Place(BaseModel, Base):
                 default=0)
         latitude = Column(Float)
         longitude = Column(Float)
+        reviews = relationship("Review", cascade='delete')
     else:
+        @property
+        def reviews(self):
+            pass
+
         city_id = ""
         user_id = ""
         name = ""
