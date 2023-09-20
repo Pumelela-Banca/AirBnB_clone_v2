@@ -69,3 +69,7 @@ class TestDB(unittest.TestCase):
         self.assertNotIn(f"User.{two.id}", storage.all(User).keys())
         cursor.close()
         enginDB.close()
+
+
+if __name__ == '__main__':
+    unittest.main()
