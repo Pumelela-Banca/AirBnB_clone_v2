@@ -92,9 +92,12 @@ class TestDB(unittest.TestCase):
              "Alex",
              "Brown"))
         self.assertNotIn("User.holder", storage.all())
+        self.assertNotIn("alex@moo", storage.all())
         engineDB.commit()
         storage.reload()
         self.assertIn("User.holder", storage.all())
+        self.assertIn("alex@moo", storage.all())
+        self.assertIn("password", storage.all())
         cursor.close()
         engineDB.close()
 
@@ -102,4 +105,4 @@ class TestDB(unittest.TestCase):
         """
         Tests if instance is saved in DB
         """
-        pass
+
