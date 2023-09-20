@@ -3,6 +3,7 @@
 import os
 import unittest
 import MySQLdb
+from datetime import datetime
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -14,7 +15,7 @@ env_val = os.environ.get('HBNB_TYPE_STORAGE')
 @unittest.skipIf(env_val != 'db', 'Not a DB run')
 class TestDB(unittest.TestCase):
     """ Class to test the file storage method """
-    def test_addition_and_delete(self):
+    def test_save(self):
         """
         test if objects are added to db
         """
@@ -42,7 +43,7 @@ class TestDB(unittest.TestCase):
         cursor.close()
         enginDB.close()
 
-    def test_deletion(self):
+    def test_delete(self):
         """
         Tests to see if files are deleted
         """
@@ -70,6 +71,35 @@ class TestDB(unittest.TestCase):
         cursor.close()
         enginDB.close()
 
+    def test_reload(self):
+        """
+        test if instance can be reloaded
+        """
+        engineDB = MySQLdb.connect(host=os.environ.get('HBNB_MYSQL_HOST'),
+                                  user=os.environ.get("HBNB_MYSQL_USER"),
+                                  passwd=os.environ.get("HBNB_MYSQL_PWD"),
+                                  port=3306,
+                                  db=os.environ.get("HBNB_MYSQL_DB"))
+        cursor = engineDB.cursor()
+        cursor.execute(
+            """INSERT INTO users(id, created_at, updated_at, email, password
+            first_name, last_name) VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+            ("holder",
+             str(datetime.now()),
+             str(datetime.now()),
+             "alex@moo",
+             "password",
+             "Alex",
+             "Brown"))
+        self.assertNotIn("User.holder", storage.all())
+        engineDB.commit()
+        storage.reload()
+        self.assertIn("User.holder", storage.all())
+        cursor.close()
+        engineDB.close()
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_save(self):
+        """
+        Tests if instance is saved in DB
+        """
+        pass
