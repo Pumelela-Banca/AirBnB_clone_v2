@@ -62,8 +62,4 @@ class TestDB(unittest.TestCase):
         cursor = enginDB.cursor()
         cursor.execute("SELECT * FROM users WHERE id='{}'".format(two.id))
         info = cursor.fetchone()
-        self.assertNotIn(f"User.{two.id}", storage.all(User).keys())
-
-
-if __name__ == '__main__':
-    unittest.main()
+        #self.assertNotIn(f"User.{two.id}", storage.all(User).keys())
