@@ -45,6 +45,25 @@ class TestDB(unittest.TestCase):
         cursor.close()
         enginDB.close()
 
+    def test_deletion(self):
+        """
+        Tests to see if files are deleted
+        """
+        two = User(first_name="Sbu", last_name="Ndebele",
+                   password="123", email="viet@zoom.com")
+        enginDB = MySQLdb.connect(host=os.environ.get('HBNB_MYSQL_HOST'),
+                                  user=os.environ.get("HBNB_MYSQL_USER"),
+                                  passwd=os.environ.get("HBNB_MYSQL_PWD"),
+                                  port=3306,
+                                  db=os.environ.get("HBNB_MYSQL_DB"))
+        two.save()
+        # find two in engine
+        self.assertTrue(two in storage.all().values())
+        cursor = enginDB.cursor()
+        cursor.execute("SELECT * FROM users WHERE id='{}'".format(two.id))
+        info = cursor.fetchone()
+        self.assertNotIn(f"User.{two.id}", storage.all(User).keys())
+
 
 if __name__ == '__main__':
     unittest.main()
