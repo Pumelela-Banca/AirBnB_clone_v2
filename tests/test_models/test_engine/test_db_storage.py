@@ -105,9 +105,25 @@ class TestDB(unittest.TestCase):
         """
         Tests if instance is saved in DB
         """
+        three = User(
+            first_name="Naru", last_name="Uzu",
+            password="rasen", email="NA@HL.com"
+        )
+        engineDB = MySQLdb.connect(host=os.environ.get('HBNB_MYSQL_HOST'),
+                                  user=os.environ.get("HBNB_MYSQL_USER"),
+                                  passwd=os.environ.get("HBNB_MYSQL_PWD"),
+                                  port=3306,
+                                  db=os.environ.get("HBNB_MYSQL_DB"))
+        cursor = engineDB.cursor()
         pass
 
     def test_new(self):
         """test if new can be used to add
         new item to DB"""
+        pass
+
+    def test_all(self):
+        """
+        test if all works
+        """
         pass
