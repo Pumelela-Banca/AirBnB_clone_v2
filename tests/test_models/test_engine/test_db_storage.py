@@ -105,4 +105,9 @@ class TestDB(unittest.TestCase):
         """
         Tests if instance is saved in DB
         """
+        pass
 
+    def test_new(self):
+        """test if new can be used to add
+        new item to DB"""
+        pass
