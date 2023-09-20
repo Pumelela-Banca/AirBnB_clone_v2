@@ -14,7 +14,7 @@ env_val = os.environ.get('HBNB_TYPE_STORAGE')
 @unittest.skipIf(env_val != 'db', 'Not a DB run')
 class TestDB(unittest.TestCase):
     """ Class to test the file storage method """
-    def test_addition(self):
+    def test_addition_and_delete(self):
         """
         test if objects are added to db
         """
@@ -38,6 +38,12 @@ class TestDB(unittest.TestCase):
         self.assertIn("Ndebele", info)
         self.assertIn("123", info)
         self.assertIn("viet@zoom.com", info)
+        self.assertIn(f"User.{one.id}", storage.all(User).keys())
+        # delete
+        one.delete()
+        self.assertNotIn(f"User.{one.id}", storage.all(User).keys())
+        cursor.close()
+        enginDB.close()
 
 
 if __name__ == '__main__':
