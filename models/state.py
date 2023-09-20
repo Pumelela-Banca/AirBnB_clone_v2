@@ -12,16 +12,13 @@ env_val = os.environ.get('HBNB_TYPE_STORAGE')
 
 class State(BaseModel, Base):
     """ State class """
+    __tablename__ = "states"
+    name = Column(String(128), nullable=False)
+    cities = relationship(
+            "City",
+            cascade="all, delete-orphan",
+            backref="state")
     if env_val == 'db':
-        __tablename__ = "states"
-        name = Column(String(128), nullable=False)
-        cities = relationship(
-                "City",
-                cascade="all, delete-orphan",
-                backref="state")
-    else:
-        name = ""
-
         @property
         def cities(self):
             """Returns the list of City instances with
