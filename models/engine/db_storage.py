@@ -83,3 +83,9 @@ class DBStorage:
                 expire_on_commit=False)
         ScopedSessionFactory = scoped_session(SessionFactory)
         self.__session = ScopedSessionFactory()
+
+    def close(self):
+        """
+        deserialize JSON
+        """
+        self.__session.close()
