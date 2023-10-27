@@ -6,28 +6,22 @@ Start flask
 
 from flask import Flask, render_template
 from models import storage
-from models.state import State
 
 
 app = Flask(__name__)
 
 
-@app.route('/states_list', strict_slashes=False)
-def states_list():
+@app.route('/states', strict_slashes=False)
+@app.route('/states/<state_id>', strict_slashes=False)
+def states(state_id=None):
     """
-    show html file
+    displays states
     """
-    states = storage.all(State).values()
-    return render_template('7-states_list.html', states=states)
+    states = storage.all("State")
 
-
-@app.route('/cities_by_states', strict_slashes=False)
-def city_by_states():
-    """
-    show html
-    """
-    states = storage.all(State).values()
-    return render_template('8-cities_by_states.html', states=states)
+    if state_id is not None:
+        state_id = 'State.' + state_id
+    return render_template('9-states.html', states=states, state_id=state_id)
 
 
 @app.teardown_appcontext
