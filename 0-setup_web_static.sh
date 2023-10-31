@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Creates data directories
 
 sudo apt-get update
 sudo apt-get -y install nginx
