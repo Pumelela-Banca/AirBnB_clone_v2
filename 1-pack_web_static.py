@@ -16,10 +16,10 @@ def do_pack():
     """
     try:
         if isdir("versions") is False:
-            local("mkdir versions")
+            local("sudo mkdir versions")
         name = "versions/web_static_{}.tgz".format(
             datetime.now().strftime("%Y%m%d%H%M%S"))
-        local(f"tar -cvzf {name} web_static")
+        local(f"sudo tar -cvzf {name} web_static")
         return name
     except:
         return None
