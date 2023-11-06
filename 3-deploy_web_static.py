@@ -15,6 +15,7 @@ env.hosts = ["18.206.192.143", "54.83.136.225"]
 env.user = 'ubuntu'
 env.key_filename = "~/.ssh/school"
 
+
 def do_pack():
     """
     creates tgz archive from static folder
