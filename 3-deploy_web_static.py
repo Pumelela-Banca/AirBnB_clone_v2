@@ -13,7 +13,7 @@ from fabric.api import local
 
 env.hosts = ["18.206.192.143", "54.83.136.225"]
 env.user = 'ubuntu'
-env.key_filename = "~/.ssh/school"
+env.key_filename = r"C:\Users\DELL 3550\.ssh\holla"
 
 
 def do_pack():
